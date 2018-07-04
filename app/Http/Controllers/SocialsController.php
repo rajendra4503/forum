@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Socialite;
 use App\User;
+
 class SocialsController extends Controller
 {
     /**
@@ -42,6 +43,8 @@ class SocialsController extends Controller
      */
     public function findOrCreateUser($user, $provider)
     {
+
+      
         $authUser = User::where('provider_id', $user->id)->first();
         if ($authUser) {
             return $authUser;
@@ -49,6 +52,7 @@ class SocialsController extends Controller
         return User::create([
             'name'     => $user->name,
             'email'    => $user->email,
+            'avatar'   => $user->avatar,
             'provider' => $provider,
             'provider_id' => $user->id
         ]);
