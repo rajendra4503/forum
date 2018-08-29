@@ -71,8 +71,42 @@
             </div>
         </nav>
 
-        @yield('content')
-    </div>
+        <div class="container">
+            <div class="col-md-4">
+            <a href="{{ route('discussions.create') }}" class="form-control btn btn-primary">Create a new discussion</a>
+            <br>
+            <br>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="/home" style="text-decoration: none;">Home</a>
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Channels
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                @if(!empty($channels))
+                                @foreach($channels as $channel)
+                                    <li class="list-group-item">
+                                        <a href="" style="text-decoration: none;">{{ $channel->title }}</a>
+                                    </li>
+                                @endforeach
+                                @endif
+                            </ul>
+                        </div>
+                </div>
+            </div>
+          <div class="col-md-8">
+            @yield('content')
+          </div>
+        </div>
+        </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

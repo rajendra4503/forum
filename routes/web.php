@@ -21,3 +21,23 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('auth/{provider}', 'SocialsController@redirectToProvider');
 Route::get('auth/{provider}/callback','SocialsController@handleProviderCallback');
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('channels','ChannelsController');
+
+    Route::get('discussion/create/', [
+        'uses' => 'DiscussionsController@create',
+        'as' => 'discussions.create'
+    ]);
+    
+    Route::post('discussions/store', [
+        'uses' => 'DiscussionsController@store',
+        'as' => 'discussions.store'
+    ]);
+
+    Route::get('discussion/{slug}', [
+        'uses' => 'DiscussionsController@show',
+        'as' => 'discussion'
+    ]);
+
+});
+
