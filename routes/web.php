@@ -16,7 +16,13 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/forum', [
+    'uses'=> 'ForumController@index',
+    'as'  => 'forum'
+]);
 
 Route::get('auth/{provider}', 'SocialsController@redirectToProvider');
 Route::get('auth/{provider}/callback','SocialsController@handleProviderCallback');
