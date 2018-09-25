@@ -25,6 +25,7 @@ Route::get('/forum', [
 ]);
 
 Route::get('auth/{provider}', 'SocialsController@redirectToProvider');
+
 Route::get('auth/{provider}/callback','SocialsController@handleProviderCallback');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -43,6 +44,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('discussion/{slug}', [
         'uses' => 'DiscussionsController@show',
         'as' => 'discussion'
+    ]);
+
+    Route::post('discussion/reply/{id}', [
+        'uses' => 'DiscussionsController@reply',
+        'as' => 'discussion.reply'
+    ]);
+
+    Route::get('reply/like/{id}',[
+        'uses' => 'RepliesController@like',
+        'as' => 'reply.like'
+    ]);
+
+    Route::get('reply/unlike/{id}',[
+        'uses' => 'RepliesController@unlike',
+        'as' => 'reply.unlike'
     ]);
 
 });

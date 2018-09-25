@@ -6,12 +6,14 @@ use Session;
 use App\User;
 use App\Channel;
 use App\Discussion;
+use App\Reply;
 
 class DiscussionsController extends Controller
 {
     public function create(){
 
         $channel = Channel::all();
+
         return view('discuss')->with('channels',$channel);
     }
 
@@ -40,5 +42,26 @@ class DiscussionsController extends Controller
     public function show($slug){
         $discussion = Discussion::where('slug',$slug)->first();
         return view('discussions.show')->with('d',$discussion);
+    }
+
+    public function reply($id){
+
+     $discussion = Discussion::findOrFail($id);
+
+     if(request()->reply != ''){
+
+            $reply = Reply::create([
+                'user_id' => Auth::id(),
+                'discussion_id' => $discussion->id,
+                'content'=>request()->reply
+            ]);
+
+            Session::flash('success', 'Replied to discussion.');
+            return redirect()->back();
+      }else{
+
+        Session::flash('success', 'Please write some content.');
+        return redirect()->back();
+      }
     }
 }
